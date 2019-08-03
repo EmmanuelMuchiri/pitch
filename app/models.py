@@ -20,7 +20,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
-    reviews = db.relationship('Review',backref = 'user',lazy = "dynamic")
+    reviews = db.relationship('Review', backref = 'pitch', lazy = "dynamic")
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -63,3 +63,35 @@ class Comment(db.Model):
     def get_reviews(cls,id):
         comments = Comment.query.filter_by(movie_id=id).all()
         return comments
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(255), index = True)
+    pitch = db.relationship('Pitch', backref = 'category', lazy = "dynamic")
+
+    @classmethod
+    def get_categories(cls):
+        categories = Category.query.all()
+        return categories
+    
+class Pitch(db.Model):
+    __tablename__ = 'pitches'
+
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(255), index = True)
+    post = db.Column(db.String(300), index = True)
+    time = db.Column(db.DateTime, default = datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    reviews = db.relationship('Review', backref = 'pitch', lazy = "dynamic")
+
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_pitches(cls, id):
+        pitches = Pitch.query.filter_by(category_id = id).all()
+        return pitches
