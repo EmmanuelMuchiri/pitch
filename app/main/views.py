@@ -27,10 +27,10 @@ def new_pitch():
     if form.validate_on_submit():
         
         title=form.title.data
-        content=form.pitch.data
-        upvote=0
-        downvote=0
-        new_pitch = Pitch(title=title, content=content, upvote=upvote, downvote=downvote )
+        post=form.pitch.data
+        # upvote=0
+        # downvote=0
+        new_pitch = Pitch(title=title, post=post)
         
         db.session.add(new_pitch)
         db.session.commit()
