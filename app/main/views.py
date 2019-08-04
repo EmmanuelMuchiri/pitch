@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from .forms import ReviewForm,UpdateProfile
-from ..models import Review,User,Category,Pitch
+from ..models import Review,User,Pitch
 from flask_login import login_required,current_user
 from .. import db,photos
 import markdown2  
@@ -16,69 +16,88 @@ def index():
     title = 'Home'
     return render_template('index.html', title = title, category = category)
 
-@main.route('/category/<int:id>')
-def category(id):
-    '''
-    view category function that returns the pitches of that category
-    '''
-    category = Category.query.get(id)
-    title = f'{category.name} pitches'
-    pitch = Pitch.get_pitches(category.id)
 
-    return render_template('category.html', title = title, category = category, pitch = pitch)
-
-@main.route('/category/pitch/new/<int:id>', methods = ["GET", "POST"])
+@main.route('/pitches',methods = ['GET','POST'])
 @login_required
-def new_pitch(id):
-    '''
-    view category that returns a form to create a pitch
-    '''
+def new_pitch():
+    name = "Pitch"
+    title = 'Welcome,Pitch your one-minute pitch!'
     form = PitchForm()
-    category = Category.query.filter_by(id = id).first()
+    
     if form.validate_on_submit():
-        title = form.title.data
-        post = form.post.data
+        
+        title=form.title.data
+        content=form.pitch.data
+        upvote=0
+        downvote=0
+        new_pitch = Pitch(title=title, content=content, upvote=upvote, downvote=downvote )
 
-        # pitch instance
-        new_pitch = Pitch(category_id = category.id, title = title, post = post, user = current_user)
+        
 
-        # save pitch
-        new_pitch.save_pitch()  
-        return redirect(url_for('.category', id = category.id))
-    title = f'{category.name} pitches'
-    return render_template('new_pitch.html', title = title, pitch_form = form, category = category)
+        db.session.add(new_pitch)
+        db.session.commit()
 
-@main.route('/pitch/review/new/<int:id>', methods = ['GET','POST'])
-@login_required
-def new_review(id):
-    '''
-    view category that returns a form to create a new review
-    '''
-    form = ReviewForm()
-    pitch = Pitch.query.filter_by(id = id).first()
-    if form.validate_on_submit():
-        review = form.review.data
+         
+    # new_pitch.save_pitch()
+        return redirect(url_for('main.post_pitch'))
 
-        # review instance
-        new_review = Review(pitch_id = pitch.id, post_review = review, user = current_user)
 
-        # save review 
-        new_review.save_review()
-        return redirect(url_for('.reviews', id = pitch.id ))
+    return render_template('posts.html',title = title, name=name, pitch_form =form)
 
-    title = f'{pitch.title} review'
-    return render_template('new_review.html', title = title, review_form = form, pitch = pitch)
 
-@main.route('/pitch/reviews/<int:id>')
-def reviews(id):
-    '''
-    viw category that returns all reviews for a pitch
-    '''
-    pitch = Pitch.query.get(id)
-    review = Review.get_reviews(pitch.id)
-    title = f'{pitch.title} review'
 
-    return render_template('reviews.html', title = title, pitch = pitch, review = review)
+# @main.route('/category/pitch/new/<int:id>', methods = ["GET", "POST"])
+# @login_required
+# def new_pitch(id):
+#     '''
+#     view category that returns a form to create a pitch
+#     '''
+#     form = PitchForm()
+#     category = Category.query.filter_by(id = id).first()
+#     if form.validate_on_submit():
+#         title = form.title.data
+#         post = form.post.data
+
+#         # pitch instance
+#         new_pitch = Pitch(category_id = category.id, title = title, post = post, user = current_user)
+
+#         # save pitch
+#         new_pitch.save_pitch()  
+#         return redirect(url_for('.category', id = category.id))
+#     title = f'{category.name} pitches'
+#     return render_template('new_pitch.html', title = title, pitch_form = form, category = category)
+
+# @main.route('/pitch/review/new/<int:id>', methods = ['GET','POST'])
+# @login_required
+# def new_review(id):
+#     '''
+#     view category that returns a form to create a new review
+#     '''
+#     form = ReviewForm()
+#     pitch = Pitch.query.filter_by(id = id).first()
+#     if form.validate_on_submit():
+#         review = form.review.data
+
+#         # review instance
+#         new_review = Review(pitch_id = pitch.id, post_review = review, user = current_user)
+
+#         # save review 
+#         new_review.save_review()
+#         return redirect(url_for('.reviews', id = pitch.id ))
+
+#     title = f'{pitch.title} review'
+#     return render_template('new_review.html', title = title, review_form = form, pitch = pitch)
+
+# @main.route('/pitch/reviews/<int:id>')
+# def reviews(id):
+#     '''
+#     viw category that returns all reviews for a pitch
+#     '''
+#     pitch = Pitch.query.get(id)
+#     review = Review.get_reviews(pitch.id)
+#     title = f'{pitch.title} review'
+
+#     return render_template('reviews.html', title = title, pitch = pitch, review = review)
 
 
 

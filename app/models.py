@@ -44,17 +44,17 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-class Category(db.Model):
-    __tablename__ = 'categories'
+# class Category(db.Model):
+#     __tablename__ = 'categories'
 
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(255), index = True)
-    pitches = db.relationship('Pitch', backref = 'category', lazy = "dynamic")
+#     id = db.Column(db.Integer, primary_key = True)
+#     name = db.Column(db.String(255), index = True)
+#     pitches = db.relationship('Pitch', backref = 'category', lazy = "dynamic")
 
-    @classmethod
-    def get_categories(cls):
-        categories = Category.query.all()
-        return categories
+#     @classmethod
+#     def get_categories(cls):
+#         categories = Category.query.all()
+#         return categories
 
 class Pitch(db.Model):
     __tablename__ = 'pitches'
@@ -64,7 +64,9 @@ class Pitch(db.Model):
     post = db.Column(db.String(300), index = True)
     time = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category = db.Column(db.String(255), index = True)
+    upvote = db.Column(db.Integer)
+    downvote = db.Column(db.Integer)
     reviews = db.relationship('Review', backref = 'pitch', lazy = "dynamic")
 
     def save_pitch(self):
