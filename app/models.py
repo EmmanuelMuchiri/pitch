@@ -86,21 +86,3 @@ class Review(db.Model):
         reviews = Review.query.filter_by(pitch_id=id).all()
         return reviews
     
-
-# class Comments(db.Model):
-    
-#     __tablename__ = 'comments'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     comment = db.Column(db.String())
-#     comment_title = db.Column(db.String())
-#     pitch_id = db.Column(db.Integer, db.ForeignKey('pitch.id'))
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
-
-#     def save_comment(self):
-#         """
-#         save_comment method to save a new comment to the database
-#         """
-#         db.session.add(self)
-#         db.session.commit()
