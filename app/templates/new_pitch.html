@@ -1,12 +1,13 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
-    
-    <div class="container">
-        <div class="panel form-panel">
-            {{ wtf.quick_form(pitch_form) }}
-        </div>
-    </div>
+
+
+{%for pitches in pitches%}
+<p>{{pitches.title}}</p>
+<p>{{pitches.post}}</p>
+<p>{{pitches.category}}</p>
+{%endfor%}
 
 {% endblock %}

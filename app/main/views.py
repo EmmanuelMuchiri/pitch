@@ -50,6 +50,21 @@ def post_pitch():
     return render_template('new_pitch.html',pitches = pitches)
 
 
+@main.route('/reviews/<id>',methods = ['GET', 'POST'])
+def post_review(id):
+    pitch = Pitch.query.filter_by(id=id).first()
+    
+    form = CommentForm()
+    
+    if form.validate_on_submit():
+        title = form.title.data
+        comment = form.comment.data
+        
+        new_review = Review(comment_title = title, comment = comment, pitch_id=id, posted_by=current_user.username)
+        new_review.save_review()
+        return redirect(url_for('.post_review',id=pitch.id))
+    return render_template('reviews.html',form=form, pitch=pitch)
+
 
 
 # @main.route('/category/pitch/new/<int:id>', methods = ["GET", "POST"])

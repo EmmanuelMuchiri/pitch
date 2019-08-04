@@ -44,17 +44,6 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-# class Category(db.Model):
-#     __tablename__ = 'categories'
-
-#     id = db.Column(db.Integer, primary_key = True)
-#     name = db.Column(db.String(255), index = True)
-#     pitches = db.relationship('Pitch', backref = 'category', lazy = "dynamic")
-
-#     @classmethod
-#     def get_categories(cls):
-#         categories = Category.query.all()
-#         return categories
 
 class Pitch(db.Model):
     __tablename__ = 'pitches'
@@ -86,6 +75,7 @@ class Review(db.Model):
     time = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+    posted_by= db.Column(db.String)
 
     def save_review(self):
         db.session.add(self)
@@ -95,3 +85,22 @@ class Review(db.Model):
     def get_reviews(cls, id):
         reviews = Review.query.filter_by(pitch_id=id).all()
         return reviews
+    
+
+# class Comments(db.Model):
+    
+#     __tablename__ = 'comments'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     comment = db.Column(db.String())
+#     comment_title = db.Column(db.String())
+#     pitch_id = db.Column(db.Integer, db.ForeignKey('pitch.id'))
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
+
+#     def save_comment(self):
+#         """
+#         save_comment method to save a new comment to the database
+#         """
+#         db.session.add(self)
+#         db.session.commit()
