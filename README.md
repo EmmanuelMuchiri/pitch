@@ -4,8 +4,11 @@
 
 ## Screenshots
 ![homepage](app/static/images/home.png);
+
 ![register](app/static/images/register.png);
+
 ![Add A Pitch](app/static/images/pitch.png);
+
 ![View Pitch](app/static/images/pitch_base.png);
 
 ## Description
