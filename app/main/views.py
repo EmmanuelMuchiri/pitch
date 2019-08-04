@@ -11,10 +11,10 @@ def index():
     '''
     view root page function that returns index page
     '''
-    category = Category.get_categories()
+    # category = Category.get_categories()
 
     title = 'Home'
-    return render_template('index.html', title = title, category = category)
+    return render_template('index.html', title = title)
 
 
 @main.route('/pitches',methods = ['GET','POST'])
@@ -31,9 +31,7 @@ def new_pitch():
         upvote=0
         downvote=0
         new_pitch = Pitch(title=title, content=content, upvote=upvote, downvote=downvote )
-
         
-
         db.session.add(new_pitch)
         db.session.commit()
 
@@ -42,7 +40,15 @@ def new_pitch():
         return redirect(url_for('main.post_pitch'))
 
 
-    return render_template('posts.html',title = title, name=name, pitch_form =form)
+    return render_template('post.html',title = title, name=name, pitch_form =form)
+
+
+@main.route('/posts')
+def post_pitch():
+
+    pitches = Pitch.query.all()
+    return render_template('new_pitch.html',pitches = pitches)
+
 
 
 
