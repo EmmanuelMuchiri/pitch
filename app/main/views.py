@@ -54,13 +54,13 @@ def post_pitch():
 def post_review(id):
     pitch = Pitch.query.filter_by(id=id).first()
     
-    form = CommentForm()
+    form = ReviewForm()
     
     if form.validate_on_submit():
         title = form.title.data
-        comment = form.comment.data
+        review = form.review.data
         
-        new_review = Review(comment_title = title, comment = comment, pitch_id=id, posted_by=current_user.username)
+        new_review = Review(review_title = title, review = review, pitch_id=id, posted_by=current_user.username)
         new_review.save_review()
         return redirect(url_for('.post_review',id=pitch.id))
     return render_template('reviews.html',form=form, pitch=pitch)
