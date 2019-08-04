@@ -3,13 +3,13 @@
 ## Built By [Emmanuel Muchiri](https://github.com/emmanuelmuchiri/)
 
 ## Screenshots
-![homepage](app/static/images/home.png);
+![homepage](app/static/photos/home.png);
 
-![register](app/static/images/register.png);
+![register](app/static/photos/register.png);
 
-![Add A Pitch](app/static/images/pitch.png);
+![Add A Pitch](app/static/photos/pitch.png);
 
-![View Pitch](app/static/images/pitch_base.png);
+![View Pitch](app/static/photos/pitch_base.png);
 
 ## Description
 {erfect Pitch is an application that allows you to Post a pitch based on various categories.You can view other pitches as long as you have an account and can either comment or upvote or downvote
