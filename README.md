@@ -1,12 +1,15 @@
-# Prolific News Highlights
+# Perferct Pitch
 
 ## Built By [Emmanuel Muchiri](https://github.com/emmanuelmuchiri/)
 
 ## Screenshots
-![homepage](app/static/images/news.png);
+![homepage](app/static/images/home.png);
+![register](app/static/images/register.png);
+![Add A Pitch](app/static/images/pitch.png);
+![View Pitch](app/static/images/pitch_base.png);
 
 ## Description
-Prolific News Highlights is a web application that displays a list of various news sources like BBC and CNN. On choosing a news source.Clicking a news link will redirect the user to read it fully from the news source. It consumes data from the [News API](https://newsapi.org/).
+{erfect Pitch is an application that allows you to Post a pitch based on various categories.You can view other pitches as long as you have an account and can either comment or upvote or downvote
 
 You can view the site at: 
 
@@ -23,10 +26,11 @@ As a user I would like to:
 ## Specifications
 | Behaviour | Input | Output |
 | :---------------- | :---------------: | ------------------: |
-| Display news sources | **On page load** | List of various news sources is displayed per category |
-| Display articles from a news source | **Click a news source** | Redirected to a page with a list of articles from the source |
-| Display the preview of an article | **On page load** | Each article displays an image, title, description and publication date |
-| Read an entire article | **Click an article** | Redirected to the news source's site to read the entire article |
+| Display Welcome Message | **On page load** | Select between Add a pitch and View Pitch|
+| Display Pitch Form | **Click add pitch** | Redirected to a page where He types the title and content and then selects the category from the drop-down arrow|
+| Display the Pitch| **Click view pitch** | Each pitch displays  title, description and category|
+
+
 
 ## SetUp / Installation Requirements
 ### Prerequisites
@@ -37,7 +41,7 @@ As a user I would like to:
 ### Cloning
 * In your terminal:
         
-        $ git clone https://github.com/EmmanuelMuchiri/News-Highlights.git
+        $ git clone https://github.com/EmmanuelMuchiri/pitch.git
         $ cd News-Highlights
 
 ## Running the Application
@@ -51,20 +55,13 @@ As a user I would like to:
 
         $ python3.6 -m pip install Flask
         $ python3.6 -m pip install Flask-Bootstrap
-        $ python3.6 -m pip install Flask-Script
+        $ python3.6 -m pip install Flask-Font-Mail
+        $ python3.6 -m pip install Flask-upload
+        $ python3.6 -m pip install Flask-login
+        $ python3.6 -m pip install Flask-Alchemy
+        $ python3.6 -m pip install Flask-Simplemde
+
         
-* Setting up the API Key
-        
-        To be able to gather article info from the News API you will need an API Key.
-        
-        * Visit https://newsapi.org/ and register for an API key.
-        * In the root directory of the project folder create a file: start.sh
-        * Insert the following info into it: 
-        
-                export NEWS_API_KEY='<Your-Api-Key>'
-                python3.6 manage.py server
-                
-        * Insert the API Key you received from News Api where <Your-Api-Key> is.
         
 * To run the application, in your terminal:
 
