@@ -6,30 +6,18 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li><a href="/">Home</a></li>
-          <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Categories <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a href="/category/1">Production</a></li>
-                <li><a href="/category/2">Movie</a></li>
-                <li><a href="/category/3">Job/Promotion</a></li>
-                <li><a href="/category/4">Sales</a></li>
-                <li><a href="/category/5">News</a></li>
-                <li><a href="/category/6">Advertisement</a></li>
-              </ul>
-            </li>
-        </ul>
-                    
+        </ul>                 
         <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated %}
-          <li class="navbar-brand" >{{current_user.username}}</li>
+          <li style="color:white;padding:15px;">{{current_user.username}}</li>
+          <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
           <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
           {% else %}
           <li><a href="{{url_for('auth.register')}}">Register</a></li>
           <li class="divider"></li>
           <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
           {% endif %}
-        </ul>
-        
+        </ul>        
       </div>
     </div>
   </div>
