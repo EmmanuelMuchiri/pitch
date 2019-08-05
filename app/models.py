@@ -16,7 +16,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(255), index = True)
     email = db.Column(db.String(255), unique = True, index = True)
     password_hash = db.Column(db.String(255))   
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     pitches =  db.relationship('Pitch', backref = 'user', lazy = "dynamic")
     reviews = db.relationship('Review', backref = 'user', lazy = "dynamic")
 
@@ -33,16 +32,6 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
-
-class Role(db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User', backref = 'role', lazy = "dynamic")
-
-    def __repr__(self):
-        return f'User {self.name}'
 
 
 class Pitch(db.Model):
@@ -66,6 +55,17 @@ class Pitch(db.Model):
     def get_pitches(cls, id):
         pitches = Pitch.query.filter_by(category_id = id).all()
         return pitches
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User', backref = 'role', lazy = "dynamic")
+
+    def __repr__(self):
+        return f'User {self.name}'
+
 
 class Review(db.Model):
     __tablename__ = 'reviews'
