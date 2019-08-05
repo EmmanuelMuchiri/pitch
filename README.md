@@ -12,7 +12,7 @@
 ![View Pitch](app/static/photos/pitch_base.png);
 
 ## Description
-{erfect Pitch is an application that allows you to Post a pitch based on various categories.You can view other pitches as long as you have an account and can either comment or upvote or downvote
+Perfect Pitch is an application that allows you to Post a pitch based on various categories.You can view other pitches as long as you have an account and can either comment or upvote or downvote
 
 You can view the site at: 
 
